@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
     connect(ui->BaudRateBox, SIGNAL(currentIndexChanged(int)) ,this, SLOT(checkCustomBaudRatePolicy(int)));
     ui->BaudRateBox->addItem(QLatin1String("9600"), QSerialPort::Baud9600);
     ui->BaudRateBox->addItem(QLatin1String("19200"), QSerialPort::Baud19200);
@@ -118,4 +117,10 @@ void MainWindow::on_BtnSave_clicked()
 savesettings(ui->PortNameBox->currentText(), ui->BaudRateBox->currentText().toInt(),ui->DataBitsBox->currentText().toInt(),
              ui->ParityBox->currentText().toInt(), ui->StopBitsBox->currentText().toInt(), ui->FlowControlBox->currentText().toInt());
 
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    form.show();
+    this->setVisible(false);
 }

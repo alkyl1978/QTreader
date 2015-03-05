@@ -30,6 +30,7 @@ void Port :: Write_Settings_Port(QString name, int baudrate,int DataBits,
 
 void Port :: ConnectPort(void){//
     thisPort.setPortName(SettingsPort.name);
+    thisPort.setReadBufferSize(0);
     if (thisPort.open(QIODevice::ReadWrite)) {
         if (thisPort.setBaudRate(SettingsPort.baudRate)
                 && thisPort.setDataBits(SettingsPort.dataBits)//DataBits

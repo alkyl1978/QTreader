@@ -16,9 +16,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    port.cpp
+    port.cpp \
+    form.cpp
 
 HEADERS  += mainwindow.h \
-    port.h
+    port.h \
+    form.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    form.ui
+
+DISTFILES +=

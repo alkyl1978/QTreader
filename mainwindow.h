@@ -5,6 +5,7 @@
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 #include "port.h"
+#include "form.h"
 
 namespace Ui {
 class MainWindow;
@@ -32,10 +33,12 @@ private slots:
     void on_cEnterText_returnPressed();
     void on_BtnSave_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
-
     Port PortNew;//
+    Form form;
 
 };
 

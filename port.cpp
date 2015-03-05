@@ -62,7 +62,7 @@ void Port::handleError(QSerialPort::SerialPortError error)//
 void  Port::DisconnectPort(){
     if(thisPort.isOpen()){
         thisPort.close();
-        error_(SettingsPort.name.toLocal8Bit() + " >> Закрыт!\r");
+       error_(SettingsPort.name.toLocal8Bit() + " >> Закрыт!\r");
     }
 }
 //ot tuta kovuratji!!!

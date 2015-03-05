@@ -59,7 +59,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this,SIGNAL(savesettings(QString,int,int,int,int,int)),PortNew,SLOT(Write_Settings_Port(QString,int,int,int,int,int)));//Слот - ввод настроек!
     connect(ui->BtnConnect, SIGNAL(clicked()),PortNew,SLOT(ConnectPort()));
     connect(ui->BtnDisconect, SIGNAL(clicked()),PortNew,SLOT(DisconnectPort()));
-    connect(PortNew, SIGNAL(outPort(QString)), this, SLOT(Print(QString)));//Лог ошибок
+    connect(PortNew, SIGNAL(outPort(QByteArray)), this, SLOT(PrintHEX(QByteArray)));//Лог ошибок
     connect(this,SIGNAL(writeData(QByteArray)),PortNew,SLOT(WriteToPort(QByteArray)));
     thread_New->start();
 }
@@ -95,14 +95,22 @@ void MainWindow::on_cEnterText_returnPressed()
     QByteArray data; // Текстовая переменная
     data = ui->cEnterText->text().toLocal8Bit().toHex() + '\r'; // Присвоение "data" значения из EnterText
     writeData(data); // Отправка данных в порт
-    Print(data); // Вывод данных в консоль
+    PrintHEX(data); // Вывод данных в консоль
 }
 //+++++++++++++[Процедура вывода данных в консоль]++++++++++++++++++++++++++++++++++++++++
-void MainWindow::Print(QString data)
+void MainWindow::PrintHEX( QByteArray data)
+{
+    ui->consol->textCursor().insertText(data.toHex()+'\n'); // Вывод текста в консоль
+    ui->consol->moveCursor(QTextCursor::End);//Scroll
+}
+
+//+++++++++++++[Процедура вывода данных в консоль]++++++++++++++++++++++++++++++++++++++++
+void MainWindow::Print( QString data)
 {
     ui->consol->textCursor().insertText(data+'\r'); // Вывод текста в консоль
     ui->consol->moveCursor(QTextCursor::End);//Scroll
 }
+
 
 void MainWindow::on_BtnSave_clicked()
 {

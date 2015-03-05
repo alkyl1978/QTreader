@@ -27,6 +27,7 @@ signals:
 private slots:
     void on_Btn_Serch_clicked();
     void checkCustomBaudRatePolicy(int idx);
+    void PrintHEX(QByteArray data);
     void Print(QString data);
     void on_cEnterText_returnPressed();
     void on_BtnSave_clicked();

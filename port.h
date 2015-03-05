@@ -34,7 +34,7 @@ signals:
 
     void error_(QString err);
 
-    void outPort(QString data);
+    void outPort(QByteArray data);
 
 public slots:
 

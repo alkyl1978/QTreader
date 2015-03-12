@@ -80,6 +80,5 @@ void Port :: ReadInPort(){
 
     outPort(data);
 
-    //((QString)(adr.toInt())).toLatin1().toHex()
 }
 

@@ -11,19 +11,20 @@ serialPort::~serialPort()
      emit finished_Port();
 }
 
-void serialPort :: process_Port(){
+void serialPort :: process_Port()
+{
 connect(&thisPort,SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(handleError(QSerialPort::SerialPortError)));
 connect(&thisPort, SIGNAL(readyRead()),this,SLOT(ReadInPort()));
 }
 
-void serialPort :: Write_Settings_Port(QString name, int baudrate,int DataBits,
-int Parity,int StopBits, int FlowControl){
+void serialPort :: Write_Settings_Port(QString name, int baudrate)
+{
 SettingsPort.name = name;
 SettingsPort.baudRate = (QSerialPort::BaudRate) baudrate;
-SettingsPort.dataBits = (QSerialPort::DataBits) DataBits;
-SettingsPort.parity = (QSerialPort::Parity) Parity;
-SettingsPort.stopBits = (QSerialPort::StopBits) StopBits;
-SettingsPort.flowControl = (QSerialPort::FlowControl) FlowControl;
+SettingsPort.dataBits = QSerialPort::Data8;
+SettingsPort.parity = QSerialPort::NoParity;
+SettingsPort.stopBits = QSerialPort::OneStop;
+SettingsPort.flowControl = QSerialPort::NoFlowControl;
 }
 
 void serialPort :: ConnectPort(void)
@@ -70,14 +71,18 @@ error_(SettingsPort.name.toLocal8Bit() + " >> Закрыт!\r");
 }
 }
 
-void serialPort :: WriteToPort(QByteArray data){
-if(thisPort.isOpen()){
-thisPort.write(data);
-}
+void serialPort :: WriteToPort(QByteArray data)
+{
+if(thisPort.isOpen())
+    {
+        thisPort.write(data);
+    }
 }
 
-void serialPort :: ReadInPort(){
-QByteArray data;
-data.append(thisPort.readAll());
-outPort(data);
+void serialPort :: ReadInPort()
+{
+    QByteArray data;
+    thisPort.waitForReadyRead(50);
+    data.append(thisPort.readAll());
+    outPort(data);
 }

@@ -34,7 +34,7 @@ signals:
 public slots:
    void DisconnectPort();
    void ConnectPort(void);
-   void Write_Settings_Port(QString name, int baudrate, int DataBits, int Parity, int StopBits, int FlowControl);
+   void Write_Settings_Port(QString name, int baudrate);
    void process_Port();
    void WriteToPort(QByteArray data);
    void ReadInPort();

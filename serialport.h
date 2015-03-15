@@ -4,16 +4,7 @@
 #include <QObject>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
-
-
-struct Settings {
-QString name;
-qint32 baudRate;
-QSerialPort::DataBits dataBits;
-QSerialPort::Parity parity;
-QSerialPort::StopBits stopBits;
-QSerialPort::FlowControl flowControl;
-};
+#include <QSettings>
 
 
 class serialPort : public QObject
@@ -22,22 +13,28 @@ class serialPort : public QObject
 public:
     explicit serialPort(QObject *parent = 0);
     ~serialPort();    
-    QSerialPort thisPort;
-    Settings SettingsPort;
-
+    QSerialPort *thisPort;
+private:
+    QSettings *seting;
+    QString name;
+    qint32 baudRate;
+    QSerialPortInfo *portinfo;
 signals:
     void finished_Port(); //
    void error_(QString err);
    void outPort(QByteArray data);
+   void isvalid();
 
 
 public slots:
    void DisconnectPort();
-   void ConnectPort(void);
+   void ConnectPort(QString);
    void Write_Settings_Port(QString name, int baudrate);
    void process_Port();
    void WriteToPort(QByteArray data);
    void ReadInPort();
+   void toClose();
+
 
 private slots:
 void handleError(QSerialPort::SerialPortError error);//

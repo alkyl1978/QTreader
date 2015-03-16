@@ -80,7 +80,6 @@ if(thisPort->isOpen())
 void serialPort :: ReadInPort()
 {
     QByteArray data;
-    thisPort->waitForReadyRead(50);
     data.append(thisPort->readAll());
     emit outPort(data);
 }

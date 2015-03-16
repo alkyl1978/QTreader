@@ -26,7 +26,6 @@ private slots:
     void Print(QByteArray data);
     void closeport();
     void openport();
-
 private:
     Ui::Form *ui;
     serialPort *ser;
@@ -36,6 +35,7 @@ private:
     void timerEvent(QTimerEvent *event);
     int timer;
     QByteArray arr_out;
+    QByteArray arr_in;
 };
 
 #endif // FORM_H

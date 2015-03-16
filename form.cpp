@@ -53,8 +53,6 @@ void Form::closeEvent(QCloseEvent *)
 void Form::timerEvent(QTimerEvent *)
 {
     emit writeData(arr_out);
-    arr_out.append(0x55);
-    qDebug()  << arr_out;
 }
 
 void Form::on_pbtupdate_clicked() //обновляем доступные порты
@@ -69,7 +67,9 @@ void Form::on_pbtupdate_clicked() //обновляем доступные пор
 
 void Form::Print(QByteArray data)
 {
-
+    int i;
+    arr_in.append(data);
+    qDebug() <<arr_in.count();
 }
 
 void Form::closeport()
@@ -85,3 +85,5 @@ void Form::openport()
     ui->BtnConnect->setEnabled(false);
     timer=startTimer(1000);
 }
+
+

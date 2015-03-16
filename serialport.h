@@ -23,7 +23,8 @@ signals:
    void finished_Port(); //
    void error_(QString err);
    void outPort(QByteArray data);
-   void isvalid();
+   void closePort();
+   void openPort();
 
 
 public slots:
@@ -32,7 +33,6 @@ public slots:
    void process_Port();
    void WriteToPort(QByteArray data);
    void ReadInPort();
-   void toClose();
    void changePort(QString name);
    void changebaud(QString baund);
 

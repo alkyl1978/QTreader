@@ -7,34 +7,24 @@ serialPort::serialPort(QObject *parent) : QObject(parent)
     seting =new QSettings("MyCompany", "MyApp",this);
     name=seting->value("Com port","/dev/ttyUSB0").toString();
     baudRate =seting->value("baudRate",QSerialPort::Baud115200).toInt();
-    portinfo=new QSerialPortInfo(name);
-    qDebug() << "конструктор" << name;
 }
 
 serialPort::~serialPort()
 {
     seting->setValue("Com port",name);
     seting->setValue("baudrate",baudRate);
-    qDebug() << "деструктор";
     emit finished_Port();
 }
 
 void serialPort :: process_Port()
 {
     qDebug() << "process_Port";
-connect(thisPort,SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(handleError(QSerialPort::SerialPortError)));
-connect(thisPort, SIGNAL(readyRead()),this,SLOT(ReadInPort()));
-connect(thisPort,SIGNAL(aboutToClose()),this,SLOT(toClose()));
+    connect(thisPort,SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(handleError(QSerialPort::SerialPortError)));
+    connect(thisPort, SIGNAL(readyRead()),this,SLOT(ReadInPort()));
 }
 
 void serialPort :: ConnectPort()
 {//
-    portinfo->portName()=name;
-    if((portinfo->isValid()))
-    {
-        emit isvalid();
-        return;
-    }
     thisPort->setPortName(name);
     if (thisPort->open(QIODevice::ReadWrite))
     {
@@ -48,13 +38,14 @@ void serialPort :: ConnectPort()
     {
         error_((name+ " >> Открыт!\r").toLocal8Bit());
         qDebug() << "Порт открыт" << name << "скорость " << baudRate ;
+        emit openPort();
     }
     }
    else
    {
         thisPort->close();
+        emit closePort();
         error_(thisPort->errorString().toLocal8Bit());
-        emit isvalid();
     }
     }
 }
@@ -72,6 +63,7 @@ void serialPort::DisconnectPort()
 if(thisPort->isOpen())
 {
     thisPort->close();
+    emit closePort();
     error_(name.toLocal8Bit() + " >> Закрыт!\r");
     qDebug() << "Порт закрыт" << name;
 }
@@ -93,16 +85,13 @@ void serialPort :: ReadInPort()
     emit outPort(data);
 }
 
-void serialPort::toClose()
-{
-    emit isvalid();
-}
-
 void serialPort::changePort(QString namecom)
 {
     if(thisPort->isOpen())
     {
         thisPort->close();
+        emit closePort();
+        qDebug() << "Порт закрыт " << name;
     }
     name=namecom;
     qDebug() << "Порт изменен" << name;
@@ -114,6 +103,7 @@ void serialPort::changebaud(QString baund)
     if(thisPort->isOpen())
     {
         thisPort->setBaudRate(baudRate);
+         qDebug() << "Порт открыт изменена скорость";
     }
     qDebug() << "изменена скорость" << baudRate;
 }

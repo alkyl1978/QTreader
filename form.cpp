@@ -18,7 +18,12 @@ Form::Form(QWidget *parent) :
     connect(ui->BtnDisconect, SIGNAL(clicked()),ser,SLOT(DisconnectPort()));
     connect(ui->cmbcom,SIGNAL(currentIndexChanged(QString)),ser,SLOT(changePort(QString)));
     connect(ui->BaudRateBox, SIGNAL(currentIndexChanged(QString)) ,ser, SLOT(changebaud(QString)));
-
+    connect(ser,SIGNAL(closePort()),this,SLOT(closeport()));
+    connect(ser,SIGNAL(openPort()),this,SLOT(openport()));
+    connect(ui->pbtupdate,SIGNAL(clicked()),this,SLOT(on_pbtupdate_clicked()));
+    connect(this,SIGNAL(writeData(QByteArray)),ser,SLOT(WriteToPort(QByteArray)));
+    connect(ser, SIGNAL(outPort(QByteArray)), this, SLOT(Print(QByteArray))); // прием данных
+    connect(ser, SIGNAL(error_(QString)), ui->label, SLOT(setText(QString))); //Лог ошибок
     thread_New->start();
     set=new QSettings("MyCompany", "MyApp");
     this->restoreGeometry(set->value("geometr").toByteArray());
@@ -31,7 +36,6 @@ Form::Form(QWidget *parent) :
     ui->BaudRateBox->addItem(QLatin1String("38400"), QSerialPort::Baud38400);
     ui->BaudRateBox->addItem(QLatin1String("115200"), QSerialPort::Baud115200);
     ui->BaudRateBox->setCurrentIndex(set->value("Baudrate").toInt()); //востанавливаем предыдущее значение
-
 
 }
 Form::~Form()
@@ -46,12 +50,38 @@ void Form::closeEvent(QCloseEvent *)
     return;
 }
 
+void Form::timerEvent(QTimerEvent *)
+{
+    emit writeData(arr_out);
+    arr_out.append(0x55);
+    qDebug()  << arr_out;
+}
+
 void Form::on_pbtupdate_clicked() //обновляем доступные порты
 {
      ui->cmbcom->clear();
-     foreach(const QSerialPortInfo &port, QSerialPortInfo::availablePorts()) // добавляем в форму доступные ком порты
+     foreach( const QSerialPortInfo &port, QSerialPortInfo::availablePorts()) // добавляем в форму доступные ком порты
          {
              ui->cmbcom->addItem(port.portName());
          }
+     ui->BtnConnect->setEnabled(true);
+}
 
+void Form::Print(QByteArray data)
+{
+
+}
+
+void Form::closeport()
+{
+    ui->BtnDisconect->setEnabled(false);
+    ui->BtnConnect->setEnabled(true);
+    killTimer(timer);
+}
+
+void Form::openport()
+{
+    ui->BtnDisconect->setEnabled(true);
+    ui->BtnConnect->setEnabled(false);
+    timer=startTimer(1000);
 }

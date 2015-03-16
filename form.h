@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "serialport.h"
 #include <QSettings>
+#include <QThread>
 
 namespace Ui {
 class Form;
@@ -18,8 +19,6 @@ public:
     ~Form();
 
 private slots:
-    void on_pbtopen_clicked();
-
     void on_pbtupdate_clicked();
 
 private:

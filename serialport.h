@@ -20,7 +20,7 @@ private:
     qint32 baudRate;
     QSerialPortInfo *portinfo;
 signals:
-    void finished_Port(); //
+   void finished_Port(); //
    void error_(QString err);
    void outPort(QByteArray data);
    void isvalid();
@@ -28,12 +28,13 @@ signals:
 
 public slots:
    void DisconnectPort();
-   void ConnectPort(QString);
-   void Write_Settings_Port(QString name, int baudrate);
+   void ConnectPort();
    void process_Port();
    void WriteToPort(QByteArray data);
    void ReadInPort();
    void toClose();
+   void changePort(QString name);
+   void changebaud(QString baund);
 
 
 private slots:

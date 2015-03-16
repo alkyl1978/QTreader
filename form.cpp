@@ -67,9 +67,7 @@ void Form::on_pbtupdate_clicked() //обновляем доступные пор
 
 void Form::Print(QByteArray data)
 {
-    int i;
-    arr_in.append(data);
-    qDebug() <<arr_in.count();
+
 }
 
 void Form::closeport()

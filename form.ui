@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>359</width>
     <height>300</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>251</width>
+     <width>353</width>
      <height>29</height>
     </rect>
    </property>
@@ -27,12 +27,19 @@
      <widget class="QComboBox" name="cmbcom"/>
     </item>
     <item>
-     <widget class="QComboBox" name="cmbbaudrate"/>
+     <widget class="QComboBox" name="BaudRateBox"/>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="pbtopen">
       <property name="text">
        <string>Открыть</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pbtupdate">
+      <property name="text">
+       <string>Обновить</string>
       </property>
      </widget>
     </item>

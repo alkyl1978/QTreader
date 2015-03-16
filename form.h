@@ -17,6 +17,11 @@ public:
     explicit Form(QWidget *parent = 0);
     ~Form();
 
+private slots:
+    void on_pbtopen_clicked();
+
+    void on_pbtupdate_clicked();
+
 private:
     Ui::Form *ui;
     serialPort *ser;

@@ -88,6 +88,7 @@ void serialPort :: ReadInPort()
 
 void serialPort::changePort(QString namecom)
 {
+    if(namecom.isNull()) return;
     if(thisPort->isOpen())
     {
         thisPort->close();

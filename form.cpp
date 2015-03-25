@@ -67,7 +67,7 @@ void Form::on_pbtupdate_clicked() //обновляем доступные пор
 
 void Form::Print(QByteArray data)
 {
-
+    qDebug() <<data.toHex();
 }
 
 void Form::closeport()

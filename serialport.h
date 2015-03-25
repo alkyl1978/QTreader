@@ -6,6 +6,17 @@
 #include <QtSerialPort/QSerialPortInfo>
 #include <QSettings>
 
+typedef struct
+{
+    qint8 start_pak;
+    qint8 count;
+    qint8 dat;
+    qint16 cn;
+    qint16 cn_p;
+    qint16 dat_time;
+    qint16 crc;
+} pak_def;
+
 
 class serialPort : public QObject
 {
@@ -18,7 +29,6 @@ private:
     QSettings *seting;
     QString name;
     qint32 baudRate;
-    QSerialPortInfo *portinfo;
 signals:
    void finished_Port(); //
    void error_(QString err);

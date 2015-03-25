@@ -7,6 +7,7 @@ serialPort::serialPort(QObject *parent) : QObject(parent)
     seting =new QSettings("MyCompany", "MyApp",this);
     name=seting->value("Com port","/dev/ttyUSB0").toString();
     baudRate =seting->value("baudRate",QSerialPort::Baud115200).toInt();
+
 }
 
 serialPort::~serialPort()
@@ -83,6 +84,7 @@ void serialPort :: ReadInPort()
     data.append(thisPort->readAll());
     emit outPort(data);
 }
+
 
 void serialPort::changePort(QString namecom)
 {
